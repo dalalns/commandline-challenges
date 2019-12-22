@@ -1,0 +1,6 @@
+# print hello world to output
+echo "hello world"
+
+#print current working dir
+echo $(pwd)
+
