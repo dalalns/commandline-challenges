@@ -4,3 +4,17 @@ echo "hello world"
 #print current working dir
 echo $(pwd)
 
+#list files
+ls
+
+#list file contents
+cat access.log
+
+#Last 5 line of access.log
+tail -n 5 access.log      # on same lines head -n 5 access.log gives first 5 lines
+
+# Print the lines of access.log file which  have GET string
+cat access.log|grep "GET"
+
+#
+
