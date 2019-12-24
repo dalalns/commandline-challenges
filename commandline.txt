@@ -16,5 +16,22 @@ tail -n 5 access.log      # on same lines head -n 5 access.log gives first 5 lin
 # Print the lines of access.log file which  have GET string
 cat access.log|grep "GET"
 
-#
+#It will returns the line of files where chorme is present
+find . -exec grep chrome {} \;
+
+#it will return the filename along with the line where chrome is present
+find . -exec grep chrome {} +
+
+#find files which have string as content
+grep -l "500" *
+
+# Print all files in the current directory,# one per line (not the path, just the filename)# that contain the string "500".
+find -H -name "access.log*"
+
+# Print all matching lines (without the filename or the file path) in all files under the current directory that start with "access.log" that contain the string "500". Note that there are no files named "access.log" in the current directory,you will need to search recursively.
+find . -type f -name "access.log**" -exec grep "500" {} +
+
+
+
+
 
