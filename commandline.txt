@@ -25,30 +25,58 @@ find . -exec grep chrome {} +
 #find files which have string as content
 grep -l "500" *
 
-# Print all files in the current directory,# one per line (not the path, just the filename)# that contain the string "500".
+# Print the relative file paths, one path per line for all filenames that start with "access.log" in the current directory.
 find -H -name "access.log*"
 
 # Print all matching lines (without the filename or the file path) in all files under the current directory that start with "access.log" that contain the string "500". Note that there are no files named "access.log" in the current directory,you will need to search recursively.
 find . -type f -name "access.log**" -exec grep "500" {} \;
 
 
-# Extract all IP addresses from files # that start with "access.log" printing one # IP address per line.
+# Extract all IP addresses from files that start with "access.log" printing one  IP address per line.
 find . -type f -name "access.log*" -exec grep -oE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b" {} \;
 
-# Delete all of the files in this challenge # directory including all subdirectories and # their contents.
+# Delete all of the files in this challenge  directory including all subdirectories and their contents.
 rm -r $(pwd)/{*,.*}
 
-# Count the number of files in the current # working directory. Print the number of # files as a single integer.
+# Count the number of files in the current  working directory. Print the number of files as a single integer.
 ls -A $(pwd)|wc -l            # -A does not count . and ..
 
 # Print the contents of access.log # sorted.
 cat access.log|sort
 
-# Print the number of lines # in access.log that contain the string # "GET".
+# Print the number of lines  in access.log that contain the string  "GET".
 find . -type f -name "access.log" -exec grep "GET" {} \;|wc -l
 
-# The file split-me.txt contains a list of# numbers separated by a ';' character.# Split the numbers on the ';' character,
-# one number per line.
+# The file split-me.txt contains a list of# numbers separated by a ';' character.# Split the numbers on the ';' character, one number
+#per line.
+my_string=$(<split-me.txt)
+IFS=';' read -ra my_array <<< "$my_string"
+for i in "${my_array[@]}"
+do echo $i
+done
+
+or 
+for char in `cut -d ';' -f 1-10 --output-delimiter=' ' split-me.txt` ; do echo $char ; done
+
+# Print the numbers 1 to 100 separated by spaces.
+echo {1..100}\
+# There are files in this challenge with different file extensions.Remove all files with the .doc extension recursively in the current working directory.
+find . -type f -name "*.doc" -exec rm {} \;
+# This challenge has text files (with a .txt extension) that contain the phrase "challenges are difficult". Delete this phrase recursively from all text files. Note that some files are in subdirectories so you will need to search for them.
+find -name "*.txt" -exec sed -i '/challenges are difficult/ d' {} +
+
+# The file sum-me.txt has a list of numbers,# one per line. Print the sum of these numbers.
+sum=0;while read f;do sum=$(expr "$sum" + "$f");done <sum-me.txt;echo $sum;
+
+# Print all files in the current directory recursively without the leading directory path.
+find . -type f -exec basename "{}" ';'
+
+# Rename all files removing the extension from them in the current directory recursively.
+find . -type f | while read f; do ff=$(basename "$f"); mv $f $(dirname "$f")/"${ff%.*}"; done
+
+# The files in this challenge contain spaces.List all of the files (filenames only) in thecurrent directory but replace 
+all spaces with a '.' character.
+ls -1 | sed "s/\ /\./g"
 
 
 
